@@ -14,14 +14,19 @@ export function UserForm({actionType}) {
 
 		console.log(`About to send a ${actionType} request containing ${email}, ${password} to the API.`);
 
+		// 1. Figure out where we are making a request to
 		let targetUrl = "";
 		if (actionType == "register"){
 			targetUrl = "https://auth.bigfootds.dev/v1/users/public/register";
 		} else {
 			targetUrl = "https://auth.bigfootds.dev/v1/users/public/login";
 		}
+
+		// 2. Prepare the data to send as the fetch body data
 		let bodyDataToSend = JSON.stringify({email: email, password: password});
 		console.log(bodyDataToSend);
+
+		// 3. Create and configure the fetch request
 		let response = await fetch(
 			targetUrl, 
 			{
@@ -32,8 +37,12 @@ export function UserForm({actionType}) {
 				body: bodyDataToSend
 			}
 		);
+
+		// 4. Parse the response from the API
 		let bodyData = await response.json();
 		console.log("Body data received from API is:\n" + JSON.stringify(bodyData, null, 4));
+
+		// 5. Save the response data to global state
 
 	}
 
