@@ -26,6 +26,9 @@ export function UserForm({actionType}) {
 			targetUrl, 
 			{
 				method: "POST",
+				headers: {
+					"Content-Type":"application/json"
+				},
 				body: bodyDataToSend
 			}
 		);
