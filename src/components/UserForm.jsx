@@ -1,12 +1,15 @@
 // Prop to determine if this is login or registration 
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { UserJwtContext } from "../contexts/UserJwtContext";
 
 // actionType should be either "login" or "register"
 export function UserForm({actionType}) {
 	let [email, setEmail] = useState("");
 	let [password, setPassword] = useState("");
+
+	let [userJwtData, setUserJwtData] = useContext(UserJwtContext);
 
 
 	async function submitForm(event){
@@ -43,7 +46,11 @@ export function UserForm({actionType}) {
 		console.log("Body data received from API is:\n" + JSON.stringify(bodyData, null, 4));
 
 		// 5. Save the response data to global state
-
+		setUserJwtData({
+			accessToken: bodyData.accessToken,
+			refreshToken: bodyData.refreshToken
+		});
+		console.log("UserJwtData is now set to:\n" + JSON.stringify(userJwtData, null, 4));
 	}
 
 	return(
