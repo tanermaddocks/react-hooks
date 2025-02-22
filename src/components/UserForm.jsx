@@ -1,15 +1,15 @@
 // Prop to determine if this is login or registration 
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { UserJwtContext } from "../contexts/UserJwtContext";
+import { useUserJwtContext } from "../hooks/useUserJwtData";
 
 // actionType should be either "login" or "register"
 export function UserForm({actionType}) {
 	let [email, setEmail] = useState("");
 	let [password, setPassword] = useState("");
 
-	let [userJwtData, setUserJwtData] = useContext(UserJwtContext);
+	let [userJwtData, setUserJwtData] = useUserJwtContext();
 
 
 	async function submitForm(event){

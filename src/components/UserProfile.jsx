@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { UserJwtContext } from "../contexts/UserJwtContext";
+import { useUserJwtContext } from "../hooks/useUserJwtData";
 import { jwtDecode } from "jwt-decode";
 
 export function UserProfile(){
-	let [userJwtData] = useContext(UserJwtContext);
+	let [userJwtData] = useUserJwtContext();
 
 
 	if (userJwtData.accessToken){

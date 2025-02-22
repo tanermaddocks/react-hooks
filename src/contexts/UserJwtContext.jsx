@@ -1,13 +1,18 @@
-import { createContext, useContext } from "react";
 
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { defaultUserJwtData, UserJwtContext } from "../hooks/useUserJwtData";
 
-export const defaultUserJwtData = {
-	accessToken: "",
-	refreshToken: ""
+export function UserJwtProvider({children}){
+	let [userJwtData, setUserJwtData] = useState(defaultUserJwtData);
+
+	return(
+		<UserJwtContext.Provider value={[userJwtData, setUserJwtData]}>
+			{children}
+		</UserJwtContext.Provider>
+	)
 }
 
-export const UserJwtContext = createContext(defaultUserJwtData);
-
-export function useUserJwtContext(){
-	return useContext(UserJwtContext);
+UserJwtProvider.propTypes = {
+	children: PropTypes.ReactNode
 }

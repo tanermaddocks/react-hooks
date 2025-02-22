@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
-export function RandomPokemon() {
-    let [name, setName] = useState("");
-    let [sprite, setSprite] = useState("");
 
-    // let [readOnlyData, functionToUpdateData] = useState("");
-    // let [pokeData, setPokeData] = useState({name: "", sprite: ""});
+export function RandomPokemon(){
+	let [name, setName] = useState("");
+	let [sprite, setSprite] = useState("");
+
+	// let [readOnlyData, functionToUpdateData] = useState("");
+
+	// let [pokeData, setPokeData] = useState({name: "", sprite:""});
 
 	async function getRandomPokemon(){
 		console.log("RandomPokemonComponent has loaded.");
@@ -16,37 +18,41 @@ export function RandomPokemon() {
 		let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + targetPokemonID);
 		let data = await response.json();
 
-        setName(data.name);
-        setSprite(data.sprites.front_default);
+		return data;
 
-        // return data;
+		// setName(data.name);
+		// setSprite(data.sprites.front_default);
 
-		// this.setState({ // Only for class components
+		// this.setState is only for class components!
+		// this.setState({
 		// 	name: data.name,
 		// 	sprite: data.sprites.front_default
 		// });
-	};
-    // useEffect(() => {
-
-	// }, []);
+	}
 
 	// componentDidMount
 	useEffect(() => {
 		console.log("Component has loaded!");
 
-        getRandomPokemon()
+		getRandomPokemon().then(data => {
+			setName(data.name);
+			setSprite(data.sprites.front_default);
+		});
+		
+	}, []);
 
-        // getRandomPokemon().then(data => {
-		// 	setName(data.name);
-		// 	setSprite(data.sprites.front_default);
-		// });
-
+	useEffect(() => {
+		// componentWillUnmount
+		return (() => {
+			console.log("useEffect replicating onComponentDidMount is unloading.");
+		});
 	}, []);
 
 	// componentDidUpdate
 	useEffect(() => {
 		console.log(`name: ${name}\nsprite: ${sprite}`);
 
+		// componentWillUnmount
 		return (() => {
 			console.log("useEffect tracking the state data is unloading.");
 		});
